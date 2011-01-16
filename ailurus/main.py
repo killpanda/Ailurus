@@ -286,24 +286,6 @@ class toolitem(gtk.ToolItem):
         self.align_image.set_size_request(3*self.image_size/2, -1)
         self.align_image.show_all()
     
-    def refresh(self, size):
-        if self.image_size != size:
-            self.image_size = size
-            self.__load_image()
-            self.__change_font_size()
-    
-    def __change_font_size(self):
-        import pango
-        if self.image_size <= 25:
-            font_size = 4
-        elif 25 < self.image_size <= 30:
-            font_size = 5
-        elif 30 < self.image_size <= 40:
-            font_size = 6
-        else:
-            font_size = 8
-        self.text.modify_font(pango.FontDescription('Sans %s' % font_size))
-        
     def __init__(self, icon, text, signal_name, callback, *callback_args):
         gtk.ToolItem.__init__(self)
         
@@ -316,9 +298,10 @@ class toolitem(gtk.ToolItem):
         self.icon = icon
         self.align_image = align_image = gtk.Alignment(0.5, 0.5)
         self.__load_image()
-        self.text = text = gtk.Label(text)
+        label = gtk.Label()
+        label.set_markup('<small>%s</small>' % text)
+        self.text = text = label
         import pango
-        text.modify_font(pango.FontDescription('Sans 9'))
         text.set_alignment(0.5, 0.5)
         text.set_justify(gtk.JUSTIFY_CENTER)
         vbox = vbox = gtk.VBox(False, 5)
@@ -394,10 +377,6 @@ class MainView:
             menuitems.append(item)
         return create_menu_from(menuitems)
     
-    def add_quit_button(self):
-        item_quit = toolitem(D+'sora_icons/m_quit.png', _('Quit'), 'clicked', self.terminate_program)
-        self.toolbar.insert(item_quit, 0)
-
     def add_study_button_preference_button_other_button(self):
         item = toolitem(D+'sora_icons/m_others.png', _('Others'), 'button_release_event', 
                         self.__show_popupmenu_on_toolbaritem, create_menu_from(load_others_menuitems()))
@@ -426,12 +405,6 @@ class MainView:
 
     def get_item_icon_size(self):
         return min( int(self.last_x / 20), 48)
-
-    def __refresh_toolbar(self):
-        icon_size = self.get_item_icon_size()
-        for i in range(0, self.toolbar.get_n_items()):
-            item = self.toolbar.get_nth_item(i)
-            item.refresh(icon_size)
 
     def __show_popupmenu_on_toolbaritem(self, widget, event, menu):
         if event.type == gtk.gdk.BUTTON_RELEASE and event.button == 1:
@@ -533,11 +506,6 @@ class MainView:
         self.window = window = gtk.Window(gtk.WINDOW_TOPLEVEL)
         window.set_title('Ailurus')
         self.last_x = self.window.get_size()[0]
-        def configure_event(window, event, toolbar):
-            if self.last_x != self.window.get_size()[0]:
-                self.last_x = self.window.get_size()[0]
-                self.__refresh_toolbar()
-        self.window.connect('configure_event', configure_event, self.toolbar)
         window.connect("delete_event", self.terminate_program)
         window.add(vbox)
 
@@ -567,7 +535,6 @@ class MainView:
         self.register(SystemSettingPane, load_setting)
         self.register(InfoPane, load_info)
         
-        self.add_quit_button()
         self.add_study_button_preference_button_other_button()
         self.add_pane_buttons_in_toolbar()
         self.window.show_all()
@@ -577,31 +544,6 @@ class MainView:
             from support.checkupdate import check_update
             import thread
             thread.start_new_thread(check_update, (True, )) # "True" means "silent"
-
-def show_agreement():
-    message = ('Ailurus CANNOT install w32codecs/w64codecs, libdvdcss2 or close source software.\n'
-        '\n'
-        '<span color="red">Please NOTE that <b>downloading and installing w32codecs/w64codecs '
-        'and libdvdcss2 violates the Digital Millennium Copyright Act(DMCA) and other laws regarding '
-        'anti-piracy/copyright violation in the United States of America</b>.</span>\n'
-        '\n'
-        'Under NO circumstances, will the Ailurus developers be responsible for your actions which includes, '
-        'but not limited to, downloading and installing these codecs or close source software.')
-    label = gtk.Label(_('Do you agree?'))
-    dialog = gtk.MessageDialog(buttons=gtk.BUTTONS_YES_NO, type=gtk.MESSAGE_WARNING)
-    dialog.set_markup(message)
-    dialog.set_title(_('Warning'))
-    dialog.vbox.pack_start(label, False)
-    dialog.vbox.show_all()
-    ret = dialog.run()
-    dialog.destroy()
-    if ret == gtk.RESPONSE_YES:
-        Config.set_show_agreement(False)
-    if ret != gtk.RESPONSE_YES:
-        sys.exit()
-
-if Config.get_show_agreement():
-    show_agreement()
 
 with TimeStat(_('start up')):
     sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)

@@ -4,7 +4,7 @@
  "http://www.freedesktop.org/standards/PolicyKit/1.0/policyconfig.dtd">
 <policyconfig>
   <vendor>Ailurus</vendor>
-  <vendor_url>http://ailurus.cn/</vendor_url>
+  <vendor_url>http://ailurus.googlecode.com/</vendor_url>
   <action id="cn.ailurus">
     <description>Ailurus</description>
     <message>System policy prevents Ailurus from launching program as "root"</message>

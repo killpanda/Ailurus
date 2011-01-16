@@ -258,13 +258,6 @@ class Config:
         try:       return cls.get_bool('query_before_exit')
         except:    return True
     @classmethod
-    def set_show_agreement(cls, value):
-        cls.set_bool('show_agreement', value)
-    @classmethod
-    def get_show_agreement(cls):
-        try:       return cls.get_bool('show_agreement')
-        except:    return True
-    @classmethod
     def wget_set_timeout(cls, timeout):
         assert isinstance(timeout, int) and timeout>0, timeout
         cls.set_int('wget_timeout', timeout)

@@ -29,7 +29,7 @@ from support.checkupdate import *
 def __study_linux():
     study_url_items = [ 
         (True, gtk.STOCK_HELP, _('How to compile a LaTeX file into pdf file ?'), 
-         'http://ailurus.cn/?p=329', False),
+         'http://tdt.sjtu.edu.cn/ailurus/?p=329', False),
         (True, gtk.STOCK_HELP, _('Check Linux device driver'),
          'http://kmuto.jp/debian/hcl/', False),
          ]
@@ -168,7 +168,7 @@ def show_contribution_to_ailurus():
     table.attach(url_button('http://ailurus.googlecode.com/'), 1, 2, 1, 2, gtk.FILL, gtk.FILL)
     
     table.attach(right_label(_('Project news:')), 0, 1, 2, 3, gtk.FILL, gtk.FILL)
-    table.attach(url_button('http://ailurus.cn/'), 1, 2, 2, 3, gtk.FILL, gtk.FILL)
+    table.attach(url_button('http://tdt.sjtu.edu.cn/ailurus/'), 1, 2, 2, 3, gtk.FILL, gtk.FILL)
     
     table.attach(right_label(_('Code repository:')), 0, 1, 3, 4, gtk.FILL, gtk.FILL)
     table.attach(url_button('http://github.com/homerxing/Ailurus'), 1, 2, 3, 4, gtk.FILL, gtk.FILL)
@@ -265,7 +265,7 @@ def __others():
     
     help_blog = image_stock_menuitem(gtk.STOCK_HOME, _('Ailurus blog'))
     help_blog.connect('activate', 
-        lambda w: open_web_page('http://ailurus.cn/' ) )
+        lambda w: open_web_page('http://tdt.sjtu.edu.cn/ailurus/' ) )
     
     help_update = image_file_menuitem(_('Check for updates'), D+'suyun_icons/m_check_update.png', 16) 
     def callback(*w):
