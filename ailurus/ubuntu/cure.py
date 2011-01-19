@@ -37,42 +37,42 @@ class Colorful_BASH_prompt_symbols(C):
         file_append(self.bashrc, self.line)
         notify( _('The color of bash prompt symbols is changed.'), _('It will take effect at the next time you log in.') )
 
-class Fix_error_in_49_sansserif_conf(C):
-    __doc__ = _('Fix errors in 49-sansserif.conf. Otherwise, some character in Flash would be displayed as blank diamond.')
-    detail = _('Change "sans-serif" to "sans serif".')
-    type = C.MUST_FIX
-    def exists(self):
-        return False # some users found side effect
-        try:
-            with open('/etc/fonts/conf.d/49-sansserif.conf') as f:
-                return '>sans-serif<' in f.read()
-        except IOError: # File does not exist
-            return False
-    def cure(self):
-        with TempOwn('/etc/fonts/conf.d/49-sansserif.conf'):
-            with open('/etc/fonts/conf.d/49-sansserif.conf') as f:
-                content = f.read()
-            content = content.replace('>sans-serif<', '>sans serif<')
-            with open('/etc/fonts/conf.d/49-sansserif.conf', 'w') as f:
-                f.write(content)
-
-class Recover_49_sansserif_conf(C):
-    __doc__ = _('Recover 49-sansserif.conf. Change "sans serif" back to "sans-serif".')
-    detail = _('Ailurus tried to fix Flash font bug. But some users found that font in other applications is also affected.\n'
-               'This operation aims at recovering font configuration file.')
-    def exists(self):
-        try:
-            with open('/etc/fonts/conf.d/49-sansserif.conf') as f:
-                return '>sans serif<' in f.read()
-        except IOError: # File does not exist
-            return False
-    def cure(self):
-        with TempOwn('/etc/fonts/conf.d/49-sansserif.conf'):
-            with open('/etc/fonts/conf.d/49-sansserif.conf') as f:
-                content = f.read()
-            content = content.replace('>sans serif<', '>sans-serif<')
-            with open('/etc/fonts/conf.d/49-sansserif.conf', 'w') as f:
-                f.write(content)
+#class Fix_error_in_49_sansserif_conf(C):
+#    __doc__ = _('Fix errors in 49-sansserif.conf. Otherwise, some character in Flash would be displayed as blank diamond.')
+#    detail = _('Change "sans-serif" to "sans serif".')
+#    type = C.MUST_FIX
+#    def exists(self):
+#        return False # some users found side effect
+#        try:
+#            with open('/etc/fonts/conf.d/49-sansserif.conf') as f:
+#                return '>sans-serif<' in f.read()
+#        except IOError: # File does not exist
+#            return False
+#    def cure(self):
+#        with TempOwn('/etc/fonts/conf.d/49-sansserif.conf'):
+#            with open('/etc/fonts/conf.d/49-sansserif.conf') as f:
+#                content = f.read()
+#            content = content.replace('>sans-serif<', '>sans serif<')
+#            with open('/etc/fonts/conf.d/49-sansserif.conf', 'w') as f:
+#                f.write(content)
+#
+#class Recover_49_sansserif_conf(C):
+#    __doc__ = _('Recover 49-sansserif.conf. Change "sans serif" back to "sans-serif".')
+#    detail = _('Ailurus tried to fix Flash font bug. But some users found that font in other applications is also affected.\n'
+#               'This operation aims at recovering font configuration file.')
+#    def exists(self):
+#        try:
+#            with open('/etc/fonts/conf.d/49-sansserif.conf') as f:
+#                return '>sans serif<' in f.read()
+#        except IOError: # File does not exist
+#            return False
+#    def cure(self):
+#        with TempOwn('/etc/fonts/conf.d/49-sansserif.conf'):
+#            with open('/etc/fonts/conf.d/49-sansserif.conf') as f:
+#                content = f.read()
+#            content = content.replace('>sans serif<', '>sans-serif<')
+#            with open('/etc/fonts/conf.d/49-sansserif.conf', 'w') as f:
+#                f.write(content)
 
 class Add_user_to_vboxusers_group(C):
     __doc__ = _('Add yourself to "vboxusers" group. Otherwise, USB devices cannot be used in VirtualBox.')
@@ -190,29 +190,29 @@ class Install_Childsplay_voice(C):
     def cure(self):
         APT.install(self.pkg)
 
-class Sources_list_is_using_wrong_code_name(C):
-    __doc__ = _('/etc/apt/sources.list or /etc/apt/sources.list.d/ contains wrong code name.')
-    def exists(self):
-        lines = [APTSource2.remove_comment(line) for line in APTSource2.all_lines()]
-        self.right_code_name = right_code_name = VERSION
-        self.wrong_code_names = wrong_code_names = set(Config.get_all_Ubuntu_versions())
-        wrong_code_names.discard(right_code_name)
-        wrong = False
-        for line in lines:
-            for c in wrong_code_names:
-                if c in line:
-                    wrong = True
-        self.detail = _('Correct code name is %s. Get code name by "lsb_release -cs".') % right_code_name
-        return wrong
-    def cure(self):
-        for file in APTSource2.all_conf_files():
-            with TempOwn(file):
-                with open(file) as f:
-                    content = f.read()
-                for c in self.wrong_code_names:
-                    content = content.replace(c, VERSION)
-                with open(file, 'w') as f:
-                    f.write(content)
+#class Sources_list_is_using_wrong_code_name(C):
+#    __doc__ = _('/etc/apt/sources.list or /etc/apt/sources.list.d/ contains wrong code name.')
+#    def exists(self):
+#        lines = [APTSource2.remove_comment(line) for line in APTSource2.all_lines()]
+#        self.right_code_name = right_code_name = VERSION
+#        self.wrong_code_names = wrong_code_names = set(Config.get_all_Ubuntu_versions())
+#        wrong_code_names.discard(right_code_name)
+#        wrong = False
+#        for line in lines:
+#            for c in wrong_code_names:
+#                if c in line:
+#                    wrong = True
+#        self.detail = _('Correct code name is %s. Get code name by "lsb_release -cs".') % right_code_name
+#        return wrong
+#    def cure(self):
+#        for file in APTSource2.all_conf_files():
+#            with TempOwn(file):
+#                with open(file) as f:
+#                    content = f.read()
+#                for c in self.wrong_code_names:
+#                    content = content.replace(c, VERSION)
+#                with open(file, 'w') as f:
+#                    f.write(content)
 
 class Remove_ubuntu_docs_package(C):
     __doc__ = _('Remove ubuntu-docs package. Free 270M disk space.')

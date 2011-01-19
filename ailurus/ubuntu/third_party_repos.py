@@ -103,7 +103,6 @@ def get_signing_key_path(signing_key_fingerprint):
     assert isinstance(signing_key_fingerprint, str) and signing_key_fingerprint
     return A + '/publickey/launchpad_' + signing_key_fingerprint
 
-
 class _launchpad(I):
     this_is_a_repository = True
     category = 'repository'
@@ -235,7 +234,7 @@ class Repo_Moovida(_launchpad):
     license = GPL
     detail = _('Moovida is a cross platform media player.')
     content = 'moovida'
-    ppa = 'moovida-packagers/ppa'
+    ppa = 'moovida-packagers'
     
 class Repo_X_Server_Updates(_launchpad):
     __doc__ = _('X server updates (stable)')
@@ -383,16 +382,3 @@ class Repo_Docky(_launchpad):
 class Repo_CairoDock(_launchpad):
     'Cairo Dock'
     ppa = 'cairo-dock-team/weekly'
-    
-class Repo_OpenFetion(_launchpad):
-    'Openfetion'
-    detail = _('Send and receive SMS free of charge between PCs and mobile phones.')
-    content = 'openfetion'
-    ppa = 'happyaron/ppa'
-    Chinese = True
-    
-class Repo_Turpial(_launchpad):
-    'Turpial'
-    detail = _('A simple and fast client for Twitter. It supports OAuth.')
-    content = 'turpial'
-    ppa = 'effie-jayx/turpial'

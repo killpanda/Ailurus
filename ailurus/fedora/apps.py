@@ -110,18 +110,3 @@ class Enable_Sudo(I):
             run('chmod -w /etc/sudoers')
     def remove(self):
         pass
-    
-class Turpial(I):
-    __doc__ = _('Turpial')
-    detail = _('A simple and fast client for Twitter. It supports OAuth.')
-    category = 'blog'
-    license = GPL
-    download_url = 'http://turpial.org.ve/downloads/'
-    def install(self):
-        f = R(urls.turpail).download()
-        RPM.install(f)
-    def remove(self):
-        RPM.remove('turpial')      
-    def installed(self):
-        return RPM.installed('turpial')
-        

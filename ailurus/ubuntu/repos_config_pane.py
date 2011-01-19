@@ -34,56 +34,58 @@ class ReposConfigPane(gtk.VBox):
     def __init__(self, main_view):
         gtk.VBox.__init__(self, False, 5)
         
+        if os.path.exists('/etc/apt/sources.list')==False:
+        
         # the first gobject.TYPE_PYOBJECT is in [True, False, None]
         # True: this is a deb line.
         # False: this is a deb line, commented by "#" mark
         # None: this is not a deb line. For example, a normal comment
         #
         # the second gobject.TYPE_STRING is a line
-        self.treestore = treestore = gtk.TreeStore(gobject.TYPE_PYOBJECT, gobject.TYPE_STRING)
-        self.treestore_filter = treestore_filter = treestore.filter_new()
-        treestore_filter.set_visible_func(self.__treestore_item_visible_function)
-        self.treeview = treeview = gtk.TreeView(treestore_filter)
+            self.treestore = treestore = gtk.TreeStore(gobject.TYPE_PYOBJECT, gobject.TYPE_STRING)
+            self.treestore_filter = treestore_filter = treestore.filter_new()
+            treestore_filter.set_visible_func(self.__treestore_item_visible_function)
+            self.treeview = treeview = gtk.TreeView(treestore_filter)
         
-        toggle_render = gtk.CellRendererToggle()
-        toggle_render.set_property('activatable', True)
-        toggle_render.connect('toggled',self.__repo_toggled, treestore_filter)
-        toggle_column = gtk.TreeViewColumn()
-        toggle_column.set_title(_('Enabled'))
-        toggle_column.pack_start(toggle_render, False)
-        toggle_column.set_cell_data_func(toggle_render, self.__repo_toggle_cell_function)
+            toggle_render = gtk.CellRendererToggle()
+            toggle_render.set_property('activatable', True)
+            toggle_render.connect('toggled',self.__repo_toggled, treestore_filter)
+            toggle_column = gtk.TreeViewColumn()
+            toggle_column.set_title(_('Enabled'))
+            toggle_column.pack_start(toggle_render, False)
+            toggle_column.set_cell_data_func(toggle_render, self.__repo_toggle_cell_function)
         
-        text_render = gtk.CellRendererText()
-        text_render.connect('edited', self.__repo_text_edited)
-        text_render.set_property('ellipsize', pango.ELLIPSIZE_END)
-        text_column = gtk.TreeViewColumn()
-        text_column.pack_start(text_render)
-        text_column.set_cell_data_func(text_render, self.__repo_text_cell_function)
+            text_render = gtk.CellRendererText()
+            text_render.connect('edited', self.__repo_text_edited)
+            text_render.set_property('ellipsize', pango.ELLIPSIZE_END)
+            text_column = gtk.TreeViewColumn()
+            text_column.pack_start(text_render)
+            text_column.set_cell_data_func(text_render, self.__repo_text_cell_function)
         
-        treeview.append_column(toggle_column)
-        treeview.append_column(text_column)
-        treeview.set_rules_hint(True)
-        self.__refresh_treestore()
+            treeview.append_column(toggle_column)
+            treeview.append_column(text_column)
+            treeview.set_rules_hint(True)
+            self.__refresh_treestore()
         
-        scrollwindow = gtk.ScrolledWindow()
-        scrollwindow.add(treeview)
-        scrollwindow.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
-        scrollwindow.set_shadow_type(gtk.SHADOW_IN)
+            scrollwindow = gtk.ScrolledWindow()
+            scrollwindow.add(treeview)
+            scrollwindow.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
+            scrollwindow.set_shadow_type(gtk.SHADOW_IN)
         
         # TODO: Put add_debline_button in AddReposArea. Add signal "clicked" to AddReposArea.
-        self.add_repos_area = add_repos_area = AddReposArea()
-        self.add_debline_button = add_debline_button = image_stock_button(gtk.STOCK_ADD, _('Add'))
-        add_debline_button.connect('clicked', self.__add_debline_button_clicked)
-        add_debline_button_align = gtk.Alignment(0.5, 0.5)
-        add_debline_button_align.add(add_debline_button) # put add_debline_button at right-bottom corner
-        bottom_box = gtk.HBox(False, 10)
-        bottom_box.set_border_width(5)
-        bottom_box.pack_start(add_repos_area, True)
-        bottom_box.pack_start(add_debline_button_align, False)
+            self.add_repos_area = add_repos_area = AddReposArea()
+            self.add_debline_button = add_debline_button = image_stock_button(gtk.STOCK_ADD, _('Add'))
+            add_debline_button.connect('clicked', self.__add_debline_button_clicked)
+            add_debline_button_align = gtk.Alignment(0.5, 0.5)
+            add_debline_button_align.add(add_debline_button) # put add_debline_button at right-bottom corner
+            bottom_box = gtk.HBox(False, 10)
+            bottom_box.set_border_width(5)
+            bottom_box.pack_start(add_repos_area, True)
+            bottom_box.pack_start(add_debline_button_align, False)
         
-        self.treeview.expand_all()
-        self.treeview.get_selection().select_path('0')
-
+            self.treeview.expand_all()
+            self.treeview.get_selection().select_path('0')
+            
 #       Uncomment the following lines when menu is done.        
 #        def button_press_event(w, event):
 #            if event.type == gtk.gdk.BUTTON_PRESS and event.button == 3:
@@ -97,9 +99,40 @@ class ReposConfigPane(gtk.VBox):
 #        
 #        self.treeview.connect('button_press_event', button_press_event)
 
-        self.pack_start(scrollwindow)
-        self.pack_start(bottom_box, False)
-    
+            self.pack_start(scrollwindow)
+            self.pack_start(bottom_box, False)
+
+        else:
+            import pango
+            label = gtk.Label(_('Sorry. Ailurus cannot find your sources.list.\n'
+            'Please fix it first using Ubuntu Update Manager.'))
+            label.modify_font(pango.FontDescription('Sans 12'))
+            warning_box = gtk.VBox(False, 10)
+            warning_box.pack_start(label, True)
+            self.pack_start(warning_box, False)
+
+#           import StringIO            
+#           text = StringIO.StringIO()
+#           print >>text, _('Ailurus cannot find your sources list. please fix it first!')
+#           label = gtk.Label()
+#           label.set_markup(text.getvalue())
+#           text.close()
+#           label.set_justify(gtk.JUSTIFY_CENTER)
+#           scroll = gtk.ScrolledWindow()
+#           scroll.add_with_viewport(label)
+#           scroll.set_policy(gtk.POLICY_NEVER, gtk.POLICY_AUTOMATIC)
+#           scroll.set_shadow_type(gtk.SHADOW_NONE)
+#           scroll.set_size_request(-1, 200)
+#           dialog = gtk.Dialog( _('Thanks'), None, 
+#               gtk.DIALOG_MODAL | 
+#               gtk.DIALOG_NO_SEPARATOR, 
+#               buttons = (gtk.STOCK_CLOSE, gtk.RESPONSE_CLOSE))
+#           dialog.set_border_width(10)
+#           dialog.vbox.pack_start(scroll, False, False)
+#           dialog.vbox.show_all()
+#           dialog.run()
+#           dialog.destroy()
+                        
     def __treestore_item_visible_function(self, treestore, iter):
         object = treestore.get_value(iter, 0) # instance of gobject.TYPE_PYOBJECT
         return object != None
@@ -181,6 +214,13 @@ class ReposConfigPane(gtk.VBox):
                 self.treestore.append(root_node, [value, line])
             self.__set_parent_node_toggle(root_node)
         self.treestore_filter.refilter()
+    
+    def __write_changes_to_all_repo_files(self):
+        parent = self.treestore.get_iter_first()
+        while parent:
+            self.__write_changes_to_one_repo_file(parent)
+            parent = self.treestore.iter_next(parent)
+
     
     def __write_changes_to_all_repo_files(self):
         parent = self.treestore.get_iter_first()

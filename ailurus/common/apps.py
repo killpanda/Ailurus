@@ -42,7 +42,7 @@ class Generic_Genome_Browser(I):
     def installed(self):
         return False
     def remove(self):
-        raise NotImplementedError    
+        raise NotImplementedError
 
 class Bioclipse(_path_lists):
     __doc__ = _('Bioclipse: an awesome Chemical and Biological Informatics application')
@@ -60,14 +60,13 @@ class Bioclipse(_path_lists):
         else:
             f = R(urls.bioclipse64).download()
         with Chdir('/tmp'):
-            run('tar zxvf %s' %f)
+            run('tar xf "%s"' %f)
             import os
             if not os.path.exists('/opt'): run_as_root('mkdir /opt')
-            run_as_root('cp Bioclipse.2.4.0.20100709 /opt/Bioclipse -r')
-            if is32():
-                run_as_root('mv bioclipse*/bioclipse /opt/')
-            else:
-                run_as_root('mv bioclipse*/bioclipse /opt/')
+            run_as_root('rm /opt/bioclipse -rf')
+            import glob
+            path = [path for path in glob.glob('Bioclipse.*') if os.path.isdir(path)]
+            run_as_root('cp %s /opt/bioclipse -r' % path[0])
             run_as_root('chown $USER:$USER /opt/bioclipse -R')
             
             create_file(self.shortcut,'''[Desktop Entry]
@@ -240,27 +239,6 @@ class TsingHuaTeXTemplate(_download_one_file):
         self.R = R(urls.tsinghuatex)
         import os
         self.file = os.path.expandvars('$HOME/thuthesis.tgz')
-        
-class Radioget(I):
-    __doc__ = _('SHA-DA network radio: Listen to and watch radio and TV programs in China')
-    dowload_url = 'http://radioget.googlecode.com/files/radioget-0.2.3-r17-i386.deb'
-    category = 'internet'
-    license = GPL
-    Chinese = True
-    def __init__(self):
-        pass
-    
-    def install(self):
-        if is32(): url = urls.radioget32
-        else: url = urls.radioget64
-        f = R(url).download()
-        APT.install_local(f)
-        
-    def installed(self):
-        return APT.installed('radioget')
-    
-    def remove(self):
-        APT.remove('radioget')  
 
 class FFAdblock(_ff_extension):
     __doc__ = _('Adblock+: Block 99% advertisement')
@@ -401,16 +379,6 @@ class FFNoscript(_ff_extension):
     download_url = 'https://addons.mozilla.org/en-US/firefox/addon/722'
     name = u'NoScript'
     R = R(latest(722), filename='noscript.xpi')
-
-#class FFRadioGet(_ff_extension):
-#    __doc__  = _('SHA-DA network radio: Listen to and watch radio and TV programs in China')
-#    Chinese = True
-#    license = GPL
-#    detail = ''
-#    download_url = 'http://ipget.cn/RadioGet/'
-#    name = u'RadioGet'
-#    R = R(['http://ipget.cn/RadioGet/RadioGet-0.9.xpi', 'http://ailurus.googlecode.com/files/RadioGet-0.9.xpi'],
-#    15870, '132b45fd31dff76676d6d66bbe2b0f556f2f34fd') # We add a second url because ipget.cn is in expiration date now :(
 
 class FFSeoQuake(_ff_extension):
     __doc__ = _('SeoQuake: Help you view search engine parameters of your web site')

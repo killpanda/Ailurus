@@ -196,3 +196,20 @@ class Remastersys(_apt_install):
     def install(self):
         f = R(urls.remastersys).download()
         APT.install_local(f)
+
+class Radioget(I):
+    __doc__ = _('SHA-DA network radio: Listen to and watch radio and TV programs in China')
+    dowload_url = 'http://radioget.googlecode.com/'
+    category = 'internet'
+    license = GPL
+    Chinese = True
+    def visible(self):
+        return is32()
+    def install(self):
+        f = R('http://radioget.googlecode.com/files/radioget-0.2.4-i386.deb').download()
+        APT.install_local(f)
+    def installed(self):
+        return APT.installed('radioget')
+    def remove(self):
+        APT.remove('radioget')  
+    

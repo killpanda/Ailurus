@@ -38,18 +38,6 @@ def __study_linux():
          'http://www.ubuntupocketguide.com/', False),
         (_('Find more third-party repositories on http://repogen.simplylinux.ch/'), 
          'http://repogen.simplylinux.ch/', False),
-        #(_(u'How to install themes of Fedora or OpenSolaris on Ubuntu ?'), 
-        # 'http://tdt.sjtu.edu.cn/S/how_to/fedora_theme.html', False),
-        #(_(u'How to install Warcraft III and DotA on Ubuntu ?'), 
-        # 'http://ailurus.cn/?p=292', False),
-        #(_(u'How to install Matlab on Ubuntu ?'), 
-        # 'http://ailurus.cn/?p=285', False),
-        #(_('Ubuntu forum in China'),
-        # 'http://forum.ubuntu.org.cn/', True),
-        #(_('Quick configuration guide (in Chinese)'),
-        # 'http://wiki.ubuntu.org.cn/Qref', True),
-        #(_('Enjoy online music in Ubuntu (in Chinese)'),
-        # 'http://forum.ubuntu.org.cn/viewtopic.php?f=74&t=183104', True),
          ]
 
     def __get_menu(items):

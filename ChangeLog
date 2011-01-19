@@ -1,10 +1,27 @@
-2010-1-2 Ma Yue <velly.empire@gmail.com>
+2011-1-20 MA Yue <velly.empire@gmail.com>
 
-    * Modify the "layout_of_window_titlebar_buttons" class
+    * Improve the function of Editing Repository
 
-2010-10-31 Ma Yue <velly.empire@gmail.com>
+2011-1-19 MA Yue <velly.empire@gmail.com>
 
-    * Fix a little bug of ImageChooser
+    * Fix bug 1641 (fail to change avatar)
+
+2011-1-18 MA Yue <velly.empire@gmail.com>
+
+    * Add the ppa for gnome-globalmenu on ubuntu 10.10
+
+2011-1-17 MA Yue <velly.empire@gmail.com>
+
+    * Fix a bug in window titlebar setting
+    * Fix the bug 1768(fail to install Acire)
+
+2010-10-31 MA Yue <velly.empire@gmail.com>
+
+    * Correct Bioclipse installation
+    * Correct RadioGet installation
+    * Fix a bug in ImageChooser
+    * Add Brasero
+    * Add OpenFetion
 
 2010-10-29 Homer Xing <homer.xing@gmail.com>
 

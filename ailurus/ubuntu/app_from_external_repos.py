@@ -145,12 +145,24 @@ class Gnome_global_menu(_apt_install):
     ppa = 'globalmenu-team'
     pkgs = 'gnome-globalmenu'
     DE = 'gnome'
+    def visible(self):
+        return VERSION != 'maverick'
+
+class Gnome_global_menu_for_maverick(_apt_install):
+    __doc__ = _('Global Menu: A globally shared menu bar')
+    license = GPL
+    category = 'others'
+    ppa = 'nilarimogard/webupd8'
+    pkgs = 'gnome-globalmenu'
+    DE = 'gnome'
+    def visible(self):
+        return VERSION == 'maverick'
 
 class Moovida(_apt_install):
     __doc__ = _('Moovida: Media player')
     license = GPL
     category = 'player'
-    ppa = 'moovida-packagers/ppa'
+    ppa = 'moovida-packagers'
     pkgs = 'moovida'
 
 class OSD_Lyrics(_apt_install):
@@ -247,18 +259,12 @@ class Handbrake(_apt_install):
     category = 'media_editor'
     ppa = 'stebbins/handbrake-snapshots'
     pkgs = 'handbrake-gtk'
-    
+
 class OpenFetion(_apt_install):
-    __doc__ = _('Openfetion: Send and receive SMS free of charge between PCs and mobile phones.')
+    'Openfetion'
+    detail = _('''An client for China Mobile's "Fetion" service''')
     licese = GPL
     category = 'chat'
     ppa = 'happyaron/ppa'
     pkgs = 'openfetion'
     Chinese = True
-    
-class Turpial(_apt_install):
-    __doc__ = _('Turpial: A simple and fast client for Twitter. It supports OAuth.')
-    licese = GPL
-    category = 'blog'
-    ppa = 'effie-jayx/turpial'
-    pkgs = 'turpial'
