@@ -145,6 +145,18 @@ class Gnome_global_menu(_apt_install):
     ppa = 'globalmenu-team'
     pkgs = 'gnome-globalmenu'
     DE = 'gnome'
+    def visible(self):
+        return VERSION != 'maverick'
+
+class Gnome_global_menu_for_maverick(_apt_install):
+    __doc__ = _('Global Menu: A globally shared menu bar')
+    license = GPL
+    category = 'others'
+    ppa = 'nilarimogard/webupd8'
+    pkgs = 'gnome-globalmenu'
+    DE = 'gnome'
+    def visible(self):
+        return VERSION == 'maverick'
 
 class Moovida(_apt_install):
     __doc__ = _('Moovida: Media player')
@@ -256,3 +268,12 @@ class OpenFetion(_apt_install):
     ppa = 'happyaron/ppa'
     pkgs = 'openfetion'
     Chinese = True
+
+class LibreOffice(_apt_install):
+    'LibreOffice'
+    detail = _('LibreOffice is the free power-packed Open Source personal productivity suite\n'
+            '<span color="red"> Libreoffice will automatically remove Openoffice.org Suits when you install Libreoffice. </span>')
+    licese = GPL
+    category = 'business'
+    ppa = 'libreoffice/ppa'
+    pkgs = 'libreoffice libreoffice-gnome'

@@ -1,6 +1,23 @@
-2010-1-2 MA Yue <velly.empire@gmail.com>
+2010-1-21 MA Yue <velly.empire@fgmai.com>
+
+    * Add Libreoffice suits
+
+2011-1-20 MA Yue <velly.empire@gmail.com>
+
+    * Improve the function of Editing Repository
+
+2011-1-19 MA Yue <velly.empire@gmail.com>
+
+    * Fix bug 1641 (fail to change avatar)
+
+2011-1-18 MA Yue <velly.empire@gmail.com>
+
+    * Add the ppa for gnome-globalmenu on ubuntu 10.10
+
+2011-1-17 MA Yue <velly.empire@gmail.com>
 
     * Fix a bug in window titlebar setting
+    * Fix the bug 1768(fail to install Acire)
 
 2010-10-31 MA Yue <velly.empire@gmail.com>
 
