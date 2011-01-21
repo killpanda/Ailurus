@@ -34,7 +34,7 @@ class ReposConfigPane(gtk.VBox):
     def __init__(self, main_view):
         gtk.VBox.__init__(self, False, 5)
         
-        if os.path.exists('/etc/apt/sources.list')==True:
+        if os.path.exists('/etc/apt/sources.list')==False:
         
         # the first gobject.TYPE_PYOBJECT is in [True, False, None]
         # True: this is a deb line.
