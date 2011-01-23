@@ -1117,3 +1117,9 @@ license = GPL
 ubuntu = brasero
 fedora = brasero
 archlinux = brasero
+
+[Calibre]
+category = business
+license = GPL
+ubuntu = calibre
+fedora = calibre

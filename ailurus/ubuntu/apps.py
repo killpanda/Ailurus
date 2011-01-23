@@ -213,3 +213,8 @@ class Radioget(I):
     def remove(self):
         APT.remove('radioget')  
     
+#class Calibre(_apt_install):
+#   'Calibre'
+#   liciense = GPL
+#   detail = _('A free and open source e-book management application. It could synce books to e-books reader devices')
+#   pkgs = 'calibre'

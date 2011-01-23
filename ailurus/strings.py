@@ -347,4 +347,5 @@ Zhcon_0 = 'Zhcon'
 Zhcon_1 = _('Help you display Chinese characters in TTY terminal. You can launch it by "zhcon --utf8".')
 Zim_0 = 'Zim'
 Zim_1 = _('Notebook software which helps you create a wiki to your desktop')
-
+Calibre_0 = 'Calibre'
+Calibre_1 = _('A free and open source e-book management application. It could synce e-book reader devices like Kindle.')

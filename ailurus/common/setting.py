@@ -227,6 +227,6 @@ class configure_firefox(Set):
             max_connections_per_proxy.set_value(24)
             initialpaint_delay.set_value(0)
             max_time_between_reflow.set_value(3000000)
-            max_reflow_time.set_value(200)
+            max_reflow_time.set_value(5)
         tweak_key.connect('clicked', lambda w: tweak())
         return table
