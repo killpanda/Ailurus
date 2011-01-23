@@ -1123,3 +1123,4 @@ category = business
 license = GPL
 ubuntu = calibre
 fedora = calibre
+archlinux = calibre
